@@ -1,5 +1,4 @@
 package com.practice.tmdb.api;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.practice.tmdb.model.Movie;
 import com.practice.tmdb.repo.MovieRepo;
@@ -10,9 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.util.List;
-
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -37,15 +34,13 @@ class MovieControllerIntTest {
         movieRepo.deleteAllInBatch();
     }
 
-    // ✅ CREATE MOVIE TEST
+    // CREATE MOVIE TEST
     @Test
     void givenMovie_whenCreateMovie_thenReturnSavedMovie() throws Exception {
-
         Movie movie = new Movie();
         movie.setName("rrr");
         movie.setDirector("ssr");
         movie.setActors(List.of("ntr", "rc", "alia"));
-
         mockMvc.perform(post("/movies")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(movie)))
@@ -57,18 +52,15 @@ class MovieControllerIntTest {
                 .andExpect(jsonPath("$.actors", hasSize(3)));
     }
 
-    // ✅ GET MOVIE BY ID TEST
+    // GET MOVIE BY ID TEST
     @Test
     void givenMovieId_whenFetchMovie_thenReturnMovie() throws Exception {
-
         // Given
         Movie movie = new Movie();
         movie.setName("rrr");
         movie.setDirector("ss rajamouli");
         movie.setActors(List.of("ntr", "ramcharan", "aliabhatt"));
-
         Movie savedMovie = movieRepo.save(movie);
-
         // When + Then
         mockMvc.perform(get("/movies/" + savedMovie.getId()))
                 .andDo(print())
@@ -79,28 +71,23 @@ class MovieControllerIntTest {
                 .andExpect(jsonPath("$.actors", hasSize(3)));
     }
 
-    // ✅ UPDATE MOVIE TEST
+    // UPDATE MOVIE TEST
     @Test
     void givenSavedMovie_whenUpdateMovie_thenMovieUpdatedInDb() throws Exception {
-
         // Given
         Movie movie = new Movie();
         movie.setName("rrr");
         movie.setDirector("ss rajamouli");
         movie.setActors(List.of("ntr", "ramcharan", "aliabhatt"));
-
         Movie savedMovie = movieRepo.save(movie);
         Long id = savedMovie.getId();
-
         // Update movie
         movie.setActors(List.of("ntr", "ramcharan", "aliabhatt", "ajaydevgan"));
-
         mockMvc.perform(put("/movies/" + id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(movie)))
-                .andDo(print())
-                .andExpect(status().isOk());
-
+                        .andDo(print())
+                        .andExpect(status().isOk());
         // Verify updated movie
         mockMvc.perform(get("/movies/" + id))
                 .andDo(print())
@@ -111,22 +98,18 @@ class MovieControllerIntTest {
                 .andExpect(jsonPath("$.actors[3]", is("ajaydevgan")));
     }
 
-    // ✅ DELETE MOVIE TEST
+    // DELETE MOVIE TEST
     @Test
     void givenMovie_whenDeleteRequest_thenMovieRemovedFromDb() throws Exception {
-
         Movie movie = new Movie();
         movie.setName("rrr");
         movie.setDirector("ss rajamouli");
         movie.setActors(List.of("ntr", "ramcharan", "aliabhatt"));
-
         Movie savedMovie = movieRepo.save(movie);
         Long id = savedMovie.getId();
-
         mockMvc.perform(delete("/movies/" + id))
                 .andDo(print())
                 .andExpect(status().isOk());
-
         assertFalse(movieRepo.findById(id).isPresent());
     }
 }
