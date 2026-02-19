@@ -87,26 +87,26 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-                        <image>
-                            <name>docker.io/krishnavamshi518/${project.artifactId}:${project.version}</name>
-                            <publish>true</publish>
-                        </image>
-                        <docker>
-                            <publishRegistry>
-                                <username>${env.DOCKERHUB_USER}</username>
-                                <password>${env.DOCKERHUB_PWD}</password>
-                            </publishRegistry>
-                        </docker>
-					</excludes>
-				</configuration>
+			    <groupId>org.springframework.boot</groupId>
+			    <artifactId>spring-boot-maven-plugin</artifactId>
+			    <configuration>
+			        <excludes>
+			            <exclude>
+			                <groupId>org.projectlombok</groupId>
+			                <artifactId>lombok</artifactId>
+			            </exclude>
+			        </excludes>
+			        <image>
+			            <name>docker.io/krishnavamshi518/${project.artifactId}:${project.version}</name>
+			            <publish>true</publish>
+			        </image>
+			        <docker>
+			            <publishRegistry>
+			                <username>${env.DOCKERHUB_USER}</username>
+			                <password>${env.DOCKERHUB_PWD}</password>
+			            </publishRegistry>
+			        </docker>
+			    </configuration>
 			</plugin>
 		</plugins>
 	</build>
