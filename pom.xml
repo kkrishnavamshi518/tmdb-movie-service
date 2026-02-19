@@ -95,6 +95,16 @@
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 						</exclude>
+                        <image>
+                            <name>docker.io/krishnavamshi518/${project.artifactId}:${project.version}</name>
+                            <publish>true</publish>
+                        </image>
+                        <docker>
+                            <publishRegistry>
+                                <username>${env.DOCKERHUB_USER}</username>
+                                <password>${env.DOCKERHUB_PWD}</password>
+                            </publishRegistry>
+                        </docker>
 					</excludes>
 				</configuration>
 			</plugin>

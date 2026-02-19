@@ -1,5 +1,4 @@
 package com.practice.tmdb.service;
-
 import com.practice.tmdb.exception.InvalidDataException;
 import com.practice.tmdb.exception.NotFoundException;
 import com.practice.tmdb.model.Movie;
@@ -7,7 +6,6 @@ import com.practice.tmdb.repo.MovieRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 @Service
 @Transactional
 public class MovieService {

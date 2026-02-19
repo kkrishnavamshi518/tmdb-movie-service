@@ -1,5 +1,4 @@
 package com.practice.tmdb.api;
-
 import com.practice.tmdb.exception.InvalidDataException;
 import com.practice.tmdb.exception.NotFoundException;
 import lombok.Getter;
@@ -9,12 +8,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
 @ControllerAdvice
 @Slf4j
 @ResponseBody
 public class GlobalExceptionHandler {
-
     @Getter
     static class Error {
         private final String reason;
@@ -31,7 +28,6 @@ public class GlobalExceptionHandler {
         log.warn("Invalid data: {}", ex.getMessage());
         return new Error(HttpStatus.BAD_REQUEST.getReasonPhrase(), ex.getMessage());
     }
-
     // 404 Error
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -39,13 +35,11 @@ public class GlobalExceptionHandler {
         log.warn("Not found: {}", ex.getMessage());
         return new Error(HttpStatus.NOT_FOUND.getReasonPhrase(), ex.getMessage());
     }
-
     // 500 Error
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Error handleUnknownException(Exception ex) {
         log.error("Unexpected error", ex);
-        return new Error(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
-                "Something went wrong");
+        return new Error(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), "Something went wrong");
     }
 }
